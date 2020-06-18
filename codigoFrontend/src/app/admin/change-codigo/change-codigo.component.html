@@ -1,0 +1,44 @@
+<div *ngIf="changeCode.code" class="abrir-modal animacion fadeIn" id="myModal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 960px;">
+        <div class="modal-content" style="align-items: center !important;">
+            <div class="modal-header">
+                <button type="button" class="close editarPerfilCerrar" data-dismiss="modal" aria-hidden="true"
+                    (click)="cerrarCode()">
+                    <fa-icon style="float:right; color: #FF8B40;font-size: 130%;" [icon]="faTimes" alt="Cerrar"
+                        aria-label="Cerrar" title="Cerrar">
+                    </fa-icon>
+                </button>
+                <h4 class="modal-title text-center" id="myModalLabel">{{title}}</h4>
+            </div>
+            <div class="modal-body text-center">
+                <form #changeCode="ngForm">
+                    <div class="fadeIn third row justify-content-center">
+                        <div class="info row justify-content-center">
+                            <select class="selectpicker" id="selectRol" data-title="Seleccione un rol" [(ngModel)]="rol"
+                                name="rolUsuario" #rolUser="ngModel" autofocus required>
+                                <option value="profesor">Profesor</option>
+                                <option value="alumno">Alumno</option>
+                            </select>
+                            <div class="alert alert-danger" *ngIf="rolUser.invalid && (rolUser.dirty || rolUser.touched)">
+                                <div *ngIf="rolUser.errors.required">
+                                    Debes seleccionar un rol.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fadeIn third row justify-content-center">
+                        <div class="justify-content-center divPassword">
+                            <input type="text" id="code" name="codeRol" [(ngModel)]="codigo"  #codigoRol="ngModel"
+                                placeholder="Código de confirmación" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button role="button" (click)='changeCodeAsRol()' class="btn btn-default text-white" data-dismiss="modal">Cambiar
+                    código de acceso</button>
+            </div>
+        </div>
+    </div>
+</div>

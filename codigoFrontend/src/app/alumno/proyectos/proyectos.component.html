@@ -1,0 +1,40 @@
+<div class="card-header text-center">
+    <button *ngIf="authService.hasRole('alumno') && activos == false" (click)="abrirModalProy()"
+        class="btn text-white crearProyecto">CREAR NUEVO PROYECTO</button>
+    <div class="align-items-center">
+        <h4>Área de proyectos</h4>
+    </div>
+</div>
+<div class="list-group list-group-flush text-center">
+    <div *ngIf="proyectosReverse?.length==0" class="list-group-item">
+        <p>No hay ningún proyecto creado</p>
+    </div>
+    <div *ngIf="proyectosReverse?.length>0">
+        <div *ngFor="let proyecto of proyectosReverse" class="list-group-item align-items-center">
+            <fa-icon *ngIf="proyecto.estado_proyecto" style="float: left; color: #FF8B40;font-size: 130%;"
+                [icon]="faUnlockAlt" alt="Proyecto en curso" aria-label="Proyecto en curso" title="Proyecto en curso">
+            </fa-icon>
+            <fa-icon *ngIf="!proyecto.estado_proyecto" style="float: left; color: #FF8B40;font-size: 130%;"
+                [icon]="faLock" aria-label="Proyecto cerrado" title="Proyecto cerrado"></fa-icon>
+            <button *ngIf="authService.hasRole('alumno') && proyecto.estado_proyecto" title="Editar proyecto" (click)="abrirEdit(proyecto)" class="editarPerfil">
+                <fa-icon style="float: right; color: #FF8B40;font-size: 130%;" [icon]="faEdit"></fa-icon>
+            </button>
+            <p><strong>Título del proyecto: </strong>{{proyecto.titulo}}</p>
+            <p><strong>Descripción: </strong>{{proyecto.descripcion}}</p>
+            <p *ngIf="proyecto.proyectoEtiqueta.length!=0">
+                <span><strong>Tecnologías: </strong></span>
+                <span style="display: inline-block; margin-bottom: 1%;" *ngFor="let tag of proyecto.proyectoEtiqueta" class="label label-warning">{{tag.tag}}</span>
+            </p>
+            <p><strong>URL GitHub: </strong><a href="{{proyecto.urlGitHub}}" target="_blank">{{proyecto.urlGitHub}}</a>
+            </p>
+            <p><strong>Convocatoria: </strong>{{proyecto.convocatoria}}, {{proyecto.anio}}</p>
+            <p><strong>Ciclo: </strong>{{proyecto.ciclo_siglas}}</p>
+            <p *ngIf="proyecto.profesor"><strong>Tutor: </strong>{{proyecto.profesor.apellidos}}, {{proyecto.profesor.nombre}}</p>
+            <p *ngIf="proyecto.horas"><strong>Horas: </strong>{{proyecto.horas}}</p>
+            <p *ngIf="proyecto.nota"><strong>Nota: </strong>{{proyecto.nota}}</p>
+            <button role="button" [routerLink]="['/proyecto/ver', proyecto.id]"
+                class="btn btn-default text-white mas">Ver
+                más</button>
+        </div>
+    </div>
+</div>
