@@ -1,0 +1,11 @@
+.list-group-item{
+    border-bottom: 4px solid #f0ad4e;
+}
+
+.list-group{
+    padding-left: 1.25rem !important;
+}
+
+.btn-default{
+    background-color: #FF8B40;
+}

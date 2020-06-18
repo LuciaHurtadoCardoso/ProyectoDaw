@@ -1,0 +1,93 @@
+<div *ngIf="calificarService.abierto" class="abrir-modal animacion fadeIn" id="myModal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalEdit" aria-hidden="true" style="overflow-y: scroll;">
+    <div class="modal-dialog" style="max-width: 960px;">
+        <div class="modal-content" style="align-items: center !important;">
+            <div class="modal-header" style="display: block;">
+                <button type="button" class="close editarPerfil" data-dismiss="modal" aria-hidden="true"
+                    (click)="calificarService.cerrarEdit()">
+                    <fa-icon style="float: left; color: #FF8B40;font-size: 130%;" [icon]="faTimes" alt="Cerrar"
+                        aria-label="Cerrar" title="Cerrar">
+                    </fa-icon>
+                </button>
+                <h4 class="modal-title text-center" id="myModalEdit">{{encabezado}}</h4>
+                <br>
+                <p>Al llevar a cabo la calificación del proyecto, este se cerrará y se hará publico en caso de que la
+                    nota sea igual o mayor al 5.</p>
+            </div>
+            <div class="modal-body text-center" style="width: 100%; height: 100%;">
+                <form #calificarProyecto="ngForm">
+                    <div>
+                        <div class="my-3 input-group justify-content-center">
+                            <div class="info form-group">
+                                <p><strong>Titulo del proyecto: </strong>{{proyecto.titulo}}</p>
+                            </div>
+                            <div class="info form-group">
+                                <p><strong>Descripción del proyecto: </strong>{{proyecto.descripcion}}</p>
+                            </div>
+                            <div class="info form-group">
+                                <p><strong>URL GitHub: </strong><a
+                                        href="{{proyecto.urlGitHub}}">{{proyecto.urlGitHub}}</a></p>
+                            </div>
+                            <div class="info form-group" *ngIf="proyecto.proyectoEtiqueta.length!=0">
+                                <span style="display: inline-block;margin-bottom: 10px;"><strong>Tecnologías:
+                                    </strong></span>
+                                <div class="row justify-content-center">
+                                    <span *ngFor="let tag of proyecto.proyectoEtiqueta"
+                                        class="label label-warning">{{tag.tag}}</span>
+                                </div>
+                            </div>
+                            <div class="info form-group">
+                                <p><strong>Ciclo: </strong>{{proyecto.ciclo_siglas}}</p>
+                            </div>
+                            <div class="info form-group">
+                                <p><strong>Convocatoria: </strong>{{proyecto.convocatoria}}, {{proyecto.anio}}</p>
+                            </div>
+                            <div class="info form-group">
+                                <label for="horas"><strong>Horas:</strong></label>
+                                <input type="number" class="form-control" id="horas" [(ngModel)]="proyecto.horas"
+                                    name="horas" #horas="ngModel" placeholder="Indique las horas dedicadas al proyecto"
+                                    required>
+                                <div class="alert alert-danger errorCalificar" *ngIf="horas.invalid && (horas.dirty || horas.touched)">
+                                    <div *ngIf="horas.errors.required">
+                                        Las horas dedicadas al proyecto no pueden estar vacías.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info form-group">
+                                <label for="nota"><strong>Nota:</strong></label>
+                                <input type="number" class="form-control" id="nota" [(ngModel)]="proyecto.nota"
+                                    name="nota" #nota="ngModel" placeholder="Puntuación del proyecto" min="1" max="10"
+                                    required>
+                                <div class="alert alert-danger errorCalificar" *ngIf="nota.invalid && (nota.dirty || nota.touched)">
+                                    <div *ngIf="nota.errors.required">
+                                        La nota destinada al proyecto no puede estar vacía.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info form-group">
+                                <p><strong>Archivos para publicar junto al proyecto:</strong></p>
+                                <div class="custom-control custom-checkbox archivos"
+                                    *ngFor="let archivo of archivos, let i = index">
+                                    <input type="checkbox" class="custom-control-input" name="archivoSelected"
+                                        value="{{archivo}}" id="{{i}}">
+                                    <label class="custom-control-label" for="{{i}}">{{archivo}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <ul *ngIf="errores?.length>0" class="alert alert-danger" >
+                <li *ngFor="let err of errores">
+                    {{err}}
+                </li>
+            </ul>
+            <div class="modal-footer">
+
+                <button role="button" (click)='abrirSwal()' class="btn btn-default text-white" data-dismiss="modal"
+                    [disabled]="!calificarProyecto.form.valid">Calificar proyecto</button>
+
+            </div>
+        </div>
+    </div>
+</div>

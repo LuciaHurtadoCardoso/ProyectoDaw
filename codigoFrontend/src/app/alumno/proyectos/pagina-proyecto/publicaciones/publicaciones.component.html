@@ -1,0 +1,86 @@
+<div class="card-body list-group list-group-flush">
+    <div *ngIf="publicaciones?.length==0" class="list-group-item align-items-center" style="text-align: center;">
+        No hay publicaciones asociadas a este proyecto
+    </div>
+    <div *ngIf="publicaciones?.length>0">
+        <div *ngFor="let publicacion of publicacionesReverse" class="list-group-item align-items-left"
+            style="margin-bottom: 3%;">
+            <h5 style="margin-bottom:2%;">
+                <fa-icon style="margin-right:2%; color: #FF8B40;font-size: 130%;" [icon]="faMapPin" alt="Publicación"
+                    aria-label="Publicación" title="Publicación"></fa-icon> Publicación <p
+                    style="float: right; font-size: medium;">{{publicacion.fecha}}</p>
+            </h5>
+            <p style="font-size: large; margin-top: 2%;" *ngIf="publicacion.archivo"><strong>Archivo adjunto:
+                </strong><a id="myEnlace" href="{{url}}" (click)="obtenerUrl(publicacion)">
+                    Descargar archivo adjunto</a></p>
+            <p style="font-size: larger;">{{publicacion.texto}}</p>
+            <hr>
+            <div style="margin-bottom: 3%;" *ngIf="publicacion.comentarios">
+                <h5 style="margin-top:3%;margin-bottom:3%;">
+                    <fa-icon style="margin-right:2%; color: #FF8B40;font-size: 130%;" [icon]="faComments"
+                        alt="Comentarios" aria-label="Comentarios" title="Comentarios"></fa-icon>Comentarios
+                </h5>
+                <button *ngIf="publicacion.comentarios.length > 2" type="button" id="buton{{publicacion.id}}"
+                    class="btn btn-link" (click)="mostrarTodosComentarios(publicacion.id)">Ver todos los
+                    comentarios</button>
+                <button *ngIf="publicacion.comentarios.length > 2" type="button" id="ocultar{{publicacion.id}}"
+                    class="btn btn-link" (click)="ocultarComentarios(publicacion.id)" style="display: none;">Ocultar
+                    comentarios</button>
+                <div style="margin-top:3%;" *ngFor="let comentario of publicacion.comentarios, let i = index">
+                    <div *ngIf="i < publicacion.comentarios.length - 2" class="escondidos{{publicacion.id}}"
+                        style="display:none">
+                        <p *ngIf="alumno && comentario.role == 'alumno'" style="font-size: large;">
+                            <img *ngIf="alumno?.foto" src="http://localhost:8080/api/upload/img/{{alumno.foto}}"
+                                name="aboutme" width="60" height="60" alt="Foto alumno" class="rounded-circle"
+                                style="margin-right: 2%;">
+                            <img *ngIf="!alumno?.foto" src="http://localhost:8080/images/notUser.png" name="aboutme"
+                                width="60" height="60" alt="Foto alumno" class="rounded-circle"
+                                style="margin-right: 2%;">
+                            <strong>{{alumno.nombre}} {{alumno.apellidos}} </strong><small>{{comentario.fecha}}</small>
+                        </p>
+                        <p *ngIf="profesor && comentario.role == 'profesor'" style="font-size: large;">
+                            <img *ngIf="profesor?.foto" src="http://localhost:8080/api/upload/img/{{profesor.foto}}"
+                                name="aboutme" width="60" height="60" alt="Foto profesor" class="rounded-circle"
+                                style="margin-right: 2%;">
+                            <img *ngIf="!profesor?.foto" src="http://localhost:8080/images/notUser.png" name="aboutme"
+                                width="60" height="60" alt="Foto profesor" class="rounded-circle"
+                                style="margin-right: 2%;">
+                            <strong>{{profesor.nombre}} {{profesor.apellidos}}
+                            </strong><small>{{comentario.fecha}}</small>
+                        </p>
+                        <p style="font-size: large; margin-left: 8%;">{{comentario.texto}}</p>
+                    </div>
+                    <div *ngIf="i >= publicacion.comentarios.length - 2">
+                        <p *ngIf="alumno && comentario.role == 'alumno'" style="font-size: large;">
+                            <img *ngIf="alumno?.foto" src="http://localhost:8080/api/upload/img/{{alumno.foto}}"
+                                name="aboutme" width="60" height="60" alt="Foto alumno" class="rounded-circle"
+                                style="margin-right: 2%;">
+                            <img *ngIf="!alumno?.foto" src="http://localhost:8080/images/notUser.png" name="aboutme"
+                                width="60" height="60" alt="Foto alumno" class="rounded-circle"
+                                style="margin-right: 2%;">
+                            <strong>{{alumno.nombre}} {{alumno.apellidos}} </strong><small>{{comentario.fecha}}</small>
+                        </p>
+                        <p *ngIf="profesor && comentario.role == 'profesor'" style="font-size: large;">
+                            <img *ngIf="profesor?.foto" src="http://localhost:8080/api/upload/img/{{profesor.foto}}"
+                                name="aboutme" width="60" height="60" alt="Foto profesor" class="rounded-circle"
+                                style="margin-right: 2%;">
+                            <img *ngIf="!profesor?.foto" src="http://localhost:8080/images/notUser.png" name="aboutme"
+                                width="60" height="60" alt="Foto profesor" class="rounded-circle"
+                                style="margin-right: 2%;">
+                            <strong>{{profesor.nombre}} {{profesor.apellidos}}
+                            </strong><small>{{comentario.fecha}}</small>
+                        </p>
+                        <p style="font-size: large; margin-left: 8%;">{{comentario.texto}}</p>
+                    </div>
+                </div>
+                <div>
+                    <textarea class="form-control" rows="2" id="comentario{{publicacion.id}}"
+                        placeholder="Escribe aquí tu comentario" style="margin-top: 3%; margin-bottom: 2%; width: 100%;"
+                        required></textarea>
+                </div>
+                <button role="button" (click)='createComentario(publicacion.id)' class="btn btn-default text-white"
+                    data-dismiss="modal" id="boton{{publicacion.id}}">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>

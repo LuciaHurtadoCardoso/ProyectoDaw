@@ -1,0 +1,24 @@
+.navbar{
+    background-color: #FF8B40;
+    padding-bottom: 0.5%;
+    padding-top: 0.5%;
+}
+
+.navbar-brand{
+    display: flex !important;
+    align-items: center !important;
+}
+
+.logo{
+    width: 5%;
+    -webkit-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    transform: rotate(30deg);
+}
+
+.rotar{
+    display: inline-block;
+    transform: rotate(30deg);
+    margin-right: 5%;
+}

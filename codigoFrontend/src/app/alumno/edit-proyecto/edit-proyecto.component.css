@@ -1,0 +1,74 @@
+.abrir-modal{
+    background-color: rgba(0,0,0,0.7);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.btn-default{
+    background-color: #FF8B40;
+}
+
+.label-warning {
+    background-color: #f0ad4e;
+}
+
+.label-info {
+    background-color: #5bc0de;
+}
+
+.label-success {
+    background-color: #5cb85c;
+}
+
+.label {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+    margin: 1%;
+    font-size: medium;
+}
+
+.info{
+    width: 60%;
+}
+
+.btn-light{
+    color: #495057 !important;
+    background-color: #fff !important;
+    border-color: #ced4da !important;
+}
+
+.alert-danger{
+    width: 60% !important;
+    text-align: center !important;
+    list-style: none !important;
+}
+
+.editarPerfil {
+    border: none;
+    float: right;
+    background-color: transparent;
+    position: absolute;
+    right: 0;
+    margin-right: 1%;
+}
+
+.eliminarTag{
+    border: none;
+    background-color: transparent;
+}
+
+.tags:hover{
+    cursor: pointer;
+}

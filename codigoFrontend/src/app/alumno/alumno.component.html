@@ -1,0 +1,36 @@
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<app-detalle *ngIf="alumnoSeleccionado" [alumno]="alumnoSeleccionado"></app-detalle>
+<app-proyecto-new *ngIf="proyectoNewService.new"></app-proyecto-new>
+<app-edit-proyecto *ngIf="editService.abierto"></app-edit-proyecto>
+<app-password-al *ngIf="passwordAlService.modal"></app-password-al>
+<div class="container">
+    <div *ngIf="alumno" class="card">
+        <div class="card-header text-center">
+            <button *ngIf="authService.hasRole('alumno')" title="Editar perfil" (click)="abrirModal(alumno)"
+                class="editarPerfil">
+                <fa-icon style="float: left; color: #FF8B40;font-size: 130%;" [icon]="faUserEdit"></fa-icon>
+            </button>
+            <button *ngIf="authService.hasRole('alumno')" title="Cambiar contraseña" (click)="abrirChange(alumno)"
+                class="editarPassword">
+                <fa-icon style="float: right; color: #FF8B40;font-size: 130%;" [icon]="faKey"></fa-icon>
+            </button>
+            <div class="align-items-center">
+                <!-- <a href="#aboutModal" data-backdrop="static" data-keyboard="false" data-toggle="modal"
+                    data-target="#myModal"> -->
+                <!-- </a> -->
+                <div>
+                    <img *ngIf="alumno?.foto" src="http://localhost:8080/api/upload/img/{{alumno.foto}}" name="aboutme"
+                        width="140" height="140" alt="Foto perfil" class="rounded-circle">
+                    <img *ngIf="!alumno?.foto" src="http://localhost:8080/images/notUser.png" name="aboutme" width="140"
+                        height="140" alt="Foto perfil" class="rounded-circle">
+                </div>
+                <h3>{{alumno.nombre}} {{alumno.apellidos}}</h3>
+                <p>{{alumno.email}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-4">
+        <app-proyectos></app-proyectos>
+    </div>
+</div>

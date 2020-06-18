@@ -1,0 +1,58 @@
+<div *ngIf="crearPublicacionService.publi" class="abrir-modal animacion fadeIn" id="myModal" tabindex="-1" role="dialog"
+    aria-labelledby="modalCreate" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 960px;">
+        <div class="modal-content" style="align-items: center !important;">
+            <div class="modal-header">
+                <button type="button" class="close editarPerfil" data-dismiss="modal" aria-hidden="true"
+                    (click)="crearPublicacionService.cerrarModal()">
+                    <fa-icon style="float: left; color: #FF8B40;font-size: 130%;"
+                        [icon]="faTimes" alt="Cerrar" aria-label="Cerrar"
+                        title="Cerrar">
+                    </fa-icon>
+                </button>
+                <h4 class="modal-title text-center" id="modalCreate">{{tituloNew}}</h4>
+            </div>
+            <div class="modal-body text-center" style="width: 100%; height: 100%;">
+                <form #publicacionCreada="ngForm">
+                    <div class="my-3 input-group justify-content-center">
+                        <div class="info form-group">
+                            <textarea type="text" class="form-control" [(ngModel)]="publicacionNew.texto" name="texto"
+                                #texto="ngModel"
+                                placeholder="Escriba aquí una breve descripción del motivo de la publicación"></textarea>
+                            <div class="alert alert-danger" *ngIf="texto.invalid && (texto.dirty || texto.touched)">
+                                <div *ngIf="texto.errors.required">
+                                    La descripción no puede estar vacía.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info form-group row justify-content-center">
+                            <div class="custom-file col-md-10 justify-content-center">
+                                <input (change)="seleccionarArchivo($event)" type="file" class="custom-file-input"
+                                    id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+                                <label class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
+                            </div>
+                        </div>
+                        <!-- <div class="info form-group">
+                            <input type="text" class="form-control" [(ngModel)]="publicacion.archivo" name="archivo"
+                                #archivo="ngModel" placeholder="Titulo del proyecto">
+                            <div class="alert alert-danger" *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)">
+                                <div *ngIf="titulo.errors.required">
+                                    El titulo no puede estar vacío.
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </form>
+            </div>
+            <ul *ngIf="errores?.length>0" class="alert alert-danger">
+                <li *ngFor="let err of errores">
+                    {{err}}
+                </li>
+            </ul>
+            <div class="modal-footer">
+                <button role="button" (click)='create()' class="btn btn-default text-white" data-dismiss="modal"
+                    [disabled]="!publicacionCreada.form.valid">Crear nueva publicación</button>
+            </div>
+        </div>
+    </div>
+</div>

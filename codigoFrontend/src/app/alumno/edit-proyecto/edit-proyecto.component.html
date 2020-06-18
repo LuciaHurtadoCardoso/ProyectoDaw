@@ -1,0 +1,124 @@
+<div *ngIf="editService.abierto" class="abrir-modal animacion fadeIn" id="myModal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalEdit" aria-hidden="true" style="overflow-y: scroll;">
+    <div class="modal-dialog" style="max-width: 960px;">
+        <div class="modal-content" style="align-items: center !important;">
+            <div class="modal-header">
+                <button type="button" class="close editarPerfil" data-dismiss="modal" aria-hidden="true"
+                    (click)="editService.cerrarEdit()">
+                    <fa-icon style="float: left; color: #FF8B40;font-size: 130%;" [icon]="faTimes" alt="Cerrar"
+                        aria-label="Cerrar" title="Cerrar">
+                    </fa-icon>
+                </button>
+                <h4 class="modal-title text-center" id="myModalEdit">{{encabezado}}</h4>
+            </div>
+            <div class="modal-body text-center" style="width: 100%; height: 100%;">
+                <form #proyectoEdit="ngForm">
+                    <div>
+                        <div class="my-3 input-group justify-content-center">
+                            <div class="info form-group">
+                                <label for="titulo">Titulo del proyecto:</label>
+                                <input type="text" class="form-control" [(ngModel)]="proyecto.titulo" id="titulo"
+                                    name="titulo" #titulo="ngModel" placeholder={{proyecto.titulo}}>
+                                <div class="alert alert-danger"
+                                    *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)">
+                                    <div *ngIf="titulo.errors.required">
+                                        El titulo no puede estar vacío
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info form-group">
+                                <label for="descripcion">Descripción del proyecto:</label>
+                                <textarea type="text" class="form-control" id="descripcion"
+                                    [(ngModel)]="proyecto.descripcion" name="descripcion" #descripcion="ngModel"
+                                    placeholder="proyecto.descripcion"></textarea>
+                                <div class="alert alert-danger"
+                                    *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)">
+                                    <div *ngIf="descripcion.errors.required">
+                                        La descripción no puede estar vacía.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info form-group">
+                                <label for="url">URL GitHub:</label>
+                                <input type="text" class="form-control" id="url" [(ngModel)]="proyecto.urlGitHub"
+                                    name="urlGitHub" #urlGitHub="ngModel" placeholder={{proyecto.urlGitHub}}>
+                                <div class="alert alert-danger"
+                                    *ngIf="urlGitHub.invalid && (urlGitHub.dirty || urlGitHub.touched)">
+                                    <div *ngIf="urlGitHub.errors.required">
+                                        La url de GitHub no puede estar vacía
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info form-group" *ngIf="proyecto.proyectoEtiqueta.length!=0">
+                                <span style="display: inline-block;margin-bottom: 10px;"><strong>Tecnologías:
+                                    </strong></span>
+                                <span *ngFor="let tag of proyecto.proyectoEtiqueta" class="label label-warning tags"
+                                    style="display: inline-block;margin-bottom: 10px;" (click)="eliminarTag(tag)"
+                                    title="Eiliminar tag">
+                                    {{tag.tag}}
+                                    <fa-icon style="color: white;font-size: 100%; margin: 5%;" [icon]="faTimes"
+                                        alt="Cerrar" aria-label="Cerrar"></fa-icon>
+                                </span>
+                            </div>
+                            <div class="info form-group">
+                                <select class="form-control selectpicker" id="selectTag" data-dropup-auto="false"
+                                    multiple>
+                                    <option *ngFor="let tag of tags" id="{{tag.id}}" value="{{tag.id}},{{tag.tag}}">
+                                        {{tag.tag}}</option>
+                                </select>
+                            </div>
+                            <div class="info form-group">
+                                <label for="newTags">Añadir tags:</label>
+                                <input type="text" class="form-control" id="newTags" [(ngModel)]="tagsNew"
+                                    name="newTags" #newTags="ngModel"
+                                    placeholder="Si deseas añadir más de un tag, deberás separarlo con ','">
+                            </div>
+                            <div class="info form-group">
+                                <select class="form-control selectpicker" id="selectCiclo"
+                                    data-title="Seleccione un ciclo" [(ngModel)]="proyecto.ciclo_siglas"
+                                    name="ciclo_siglas" #ciclo_siglas="ngModel">
+                                    <option *ngFor="let x of ciclos" value="{{x.siglas}}">{{x.siglas}}</option>
+                                </select>
+                                <div class="alert alert-danger"
+                                    *ngIf="ciclo_siglas.invalid && (ciclo_siglas.dirty || ciclo_siglas.touched)">
+                                    <div *ngIf="ciclo_siglas.errors.required">
+                                        Debes seleccionar a que ciclo pertenece el proyecto.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info form-group">
+                                <select class="form-control selectpicker" id="selectConvocatoria"
+                                    data-title="Seleccione una convocatoria" [(ngModel)]="proyecto.convocatoria"
+                                    name="convocatoria" #convocatoria="ngModel">
+                                    <option *ngFor="let x of convocatorias" value="{{x.mes}}">{{x.mes}}</option>
+                                </select>
+                                <div class="alert alert-danger"
+                                    *ngIf="convocatoria.invalid && (convocatoria.dirty || convocatoria.touched)">
+                                    <div *ngIf="convocatoria.errors.required">
+                                        Debes seleccionar en que convocatoria se presentará el proyecto.
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="info form-group"><strong>Convocatoria del alumno:
+                                </strong>{{proyecto.convocatoria}}</div> -->
+                            <!-- <div class="info form-group"><strong>Ciclo: </strong>{{proyecto.ciclo_siglas}}</div> -->
+                            <div class="info form-group" *ngIf="proyecto.profesor"><strong>Tutor:
+                                </strong>{{proyecto.profesor.apellidos}}, {{proyecto.profesor.nombre}}</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <ul *ngIf="errores?.length>0" class="alert alert-danger">
+                <li *ngFor="let err of errores">
+                    {{err}}
+                </li>
+            </ul>
+            <div class="modal-footer">
+
+                <button role="button" (click)='update()' class="btn btn-default text-white" data-dismiss="modal"
+                    [disabled]="!proyectoEdit.form.valid">Editar la información del proyecto</button>
+
+            </div>
+        </div>
+    </div>
+</div>

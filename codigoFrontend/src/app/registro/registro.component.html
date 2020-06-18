@@ -1,0 +1,104 @@
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+
+        <div class="fadeIn first row justify-content-center">
+            <img src="https://images.vexels.com/media/users/3/151085/isolated/preview/867e0888d3253c1aa31546e37f06ab20-bombilla-icono-de-doodle-by-vexels.png"
+                id="icon" alt="User Icon" style="width: 20%; margin:5%; transform: rotate(20deg);" />
+        </div>
+
+        <form #registration="ngForm">
+            <div class="info row justify-content-center">
+                <select class="selectpicker" id="selectRol" data-title="Seleccione un rol" [(ngModel)]="rol"
+                    name="rolUsuario" #rolUser="ngModel" autofocus required>
+                    <option value="profesor">Profesor</option>
+                    <option value="alumno">Alumno</option>
+                </select>
+                <div class="alert alert-danger" *ngIf="rolUser.invalid && (rolUser.dirty || rolUser.touched)">
+                    <div *ngIf="rolUser.errors.required">
+                        Debes seleccionar un rol.
+                    </div>
+                </div>
+            </div>
+            <div class="fadeIn third row justify-content-center">
+                <input type="email" [(ngModel)]="usuario.email" id="email" name="email" placeholder="Email"
+                    #email="ngModel" required email>
+                <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                    <div *ngIf="email.errors.required">
+                        El email no puede estar vacío.
+                    </div>
+                    <div *ngIf="email.errors.email">
+                        El formato del email no es válido.
+                    </div>
+                </div>
+            </div>
+            <div class="fadeIn third row justify-content-center">
+                <div class="justify-content-center divPassword">
+                    <input type="password" [(ngModel)]="usuario.password" id="password" name="password"
+                        placeholder="Contraseña" #password="ngModel" required>
+                    <button title="Mostrar contraseña" style="height: 68px;" (click)="mostrarPassword()"
+                        class="editarPerfil">
+                        <fa-icon id="sinMostrarpass" style="color: #FF8B40;font-size: 130%;" [icon]="faEyeSlash">
+                        </fa-icon>
+                        <fa-icon id="mostradopass" style="display:none; color: #FF8B40;font-size: 130%;" [icon]="faEye">
+                        </fa-icon>
+                    </button>
+                </div>
+                <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+                    <div *ngIf="password.errors.required">
+                        La password no puede estar vacía.
+                    </div>
+                </div>
+            </div>
+            <div class="fadeIn third row justify-content-center">
+                <div class="justify-content-center divPassword">
+                    <input type="password" id="repeatPassword" name="repeatPassword" placeholder="Confirmar contraseña"
+                        required>
+                    <button title="Mostrar contraseña" style="height: 68px;" (click)="mostrarRepeat()"
+                        class="editarPerfil">
+                        <fa-icon id="sinMostrarrepeat" style="color: #FF8B40;font-size: 130%;" [icon]="faEyeSlash">
+                        </fa-icon>
+                        <fa-icon id="mostradorepeat" style="display:none; color: #FF8B40;font-size: 130%;"
+                            [icon]="faEye">
+                        </fa-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="fadeIn third row justify-content-center">
+                <input type="text" [(ngModel)]="usuario.nombre" id="nombre" name="nombre" placeholder="Nombre"
+                    #nombre="ngModel" required>
+                <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                    <div *ngIf="nombre.errors.required">
+                        El nombre no puede estar vacío.
+                    </div>
+                </div>
+            </div>
+            <div class="fadeIn third row justify-content-center">
+                <input type="text" [(ngModel)]="usuario.apellidos" id="apellidos" class="fadeIn third" name="apellidos"
+                    placeholder="Apellidos" #apellidos="ngModel" required>
+                <div class="alert alert-danger" *ngIf="apellidos.invalid && (apellidos.dirty || apellidos.touched)">
+                    <div *ngIf="apellidos.errors.required">
+                        Los apellidos no pueden estar vacíos.
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <input *ngIf="rol == 'profesor'" type="text" [(ngModel)]="codigo" id="codigoProf"
+                    placeholder="Código de profesorado" #codigoProf="ngModel" name="codigoProfesorado" required>
+                <!-- <div class="alert alert-danger" *ngIf="codigoProf.invalid && (codigoProf.dirty || codigoProf.touched)">
+                    <div *ngIf="codigoProf.errors.required">
+                        El código no puede estar vacío si quieres registrarte como profesor.
+                    </div>
+                </div> -->
+                <input *ngIf="rol == 'alumno'" type="text" [(ngModel)]="codigo" id="codigoAl"
+                    placeholder="Código de alumno" #codigoAl="ngModel" name="codigoAlumno" required>
+                <!-- <div class="alert alert-danger" *ngIf="codigoAl.invalid && (codigoAl.dirty || codigoAl.touched)">
+                    <div *ngIf="codigoAl.errors.required">
+                        El código no puede estar vacío si quieres registrarte como alumno.
+                    </div>
+                </div> -->
+            </div>
+            <input (click)='registro()' type="submit" class="fadeIn fourth botonLogin" value="Registro"
+                [disabled]="!registration.form.valid">
+        </form>
+    </div>
+</div>

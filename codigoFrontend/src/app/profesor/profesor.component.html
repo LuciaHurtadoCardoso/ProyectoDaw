@@ -1,0 +1,42 @@
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<app-detalle-prof *ngIf="profesorSeleccionado" [profesor]="profesorSeleccionado"></app-detalle-prof>
+<app-calificar *ngIf="calificarService.abierto"></app-calificar>
+<app-password-prof *ngIf="passwordProfService.modal"></app-password-prof>
+<div class="container">
+    <div *ngIf="profesor" class="card">
+        <div class="card-header text-center">
+            <button *ngIf="authService.hasRole('profesor')" title="Editar perfil" (click)="abrirModal(profesor)"
+                class="editarPerfil">
+                <fa-icon style="float: left; color: #FF8B40;font-size: 130%;" [icon]="faUserEdit"></fa-icon>
+            </button>
+            <button *ngIf="authService.hasRole('profesor')" title="Cambiar contraseña" (click)="abrirChange(profesor)"
+                class="editarPassword">
+                <fa-icon style="float: right; color: #FF8B40;font-size: 130%;" [icon]="faKey"></fa-icon>
+            </button>
+            <div class="align-items-center">
+                <div>
+                    <img *ngIf="profesor?.foto" src="http://localhost:8080/api/profesor/upload/img/{{profesor.foto}}"
+                        name="aboutme" width="140" height="140" alt="Foto perfil" class="rounded-circle">
+                    <img *ngIf="!profesor?.foto" src="http://localhost:8080/images/notUser.png" name="aboutme"
+                        width="140" height="140" alt="Foto perfil" class="rounded-circle">
+                </div>
+                <h3>{{profesor.nombre}} {{profesor.apellidos}}</h3>
+                <p>{{profesor.email}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-header text-center">
+            <button *ngIf="authService.hasRole('profesor')" (click)="sinAsignarLink()"
+                class="btn text-white crearProyecto">ASIGNAR NUEVO
+                PROYECTO</button>
+            <div class="align-items-center">
+                <h4>Área de proyectos</h4>
+            </div>
+        </div>
+        <div class="list-group list-group-flush text-center">
+            <app-proyectos-asignados></app-proyectos-asignados>
+        </div>
+    </div>
+</div>

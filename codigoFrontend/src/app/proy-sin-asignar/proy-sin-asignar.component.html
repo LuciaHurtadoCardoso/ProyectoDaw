@@ -1,0 +1,65 @@
+<div>
+    <div>
+        <h5>Filtrar</h5>
+    </div>
+
+    <div class="row justify-content-center">
+        <select class="form-control selectpicker mr-2" id="ciclo" data-title="Ciclos" name="ciclo" data-size="4"
+            data-live-search="true" data-width="fit" multiple data-max-options=1 (change)="filter('ciclo')"
+            *ngIf="ciclos">
+            <option *ngFor="let ciclo of ciclos" value="{{ciclo.siglas}}">{{ciclo.siglas}}</option>
+        </select>
+        <select class="form-control selectpicker mr-2" id="convocatoria" data-title="Convocatorias" name="convocatoria"
+            data-size="4" data-live-search="true" data-width="fit" multiple data-max-options=1
+            (change)="filter('convocatoria')" *ngIf="convocatorias">
+            <option *ngFor="let convocatoria of convocatorias" value="{{convocatoria.mes}}">{{convocatoria.mes}}
+            </option>
+        </select>
+        <select class="form-control selectpicker mr-2" id="anio" data-title="Año de realización" name="anio"
+            data-size="4" data-live-search="true" data-width="fit" multiple data-max-options=1
+            (change)="filter('anio')" *ngIf="anios">
+            <option *ngFor="let anio of anios" value="{{anio}}">{{anio}}</option>
+        </select>
+    </div>
+</div>
+<div class="card mt-4">
+    <div class="card-header text-center">
+        <div class="align-items-center">
+            <h4>{{titulo}}</h4>
+        </div>
+    </div>
+    <div class="list-group list-group-flush text-center">
+        <div *ngIf="proyectos?.length==0" class="list-group-item">
+            <h6>No hay ningún proyecto sin asignar</h6>
+        </div>
+        <div *ngIf="proyectos?.length>0">
+            <div *ngFor="let proyecto of proyectos" class="list-group-item align-items-center">
+                <fa-icon *ngIf="proyecto.estado_proyecto" style="float: left; color: #FF8B40;font-size: 130%;"
+                    [icon]="faUnlockAlt" alt="Proyecto en curso" aria-label="Proyecto en curso"
+                    title="Proyecto en curso"></fa-icon>
+                <fa-icon *ngIf="!proyecto.estado_proyecto" style="float: left; color: #FF8B40;font-size: 130%;"
+                    [icon]="faLock" aria-label="Proyecto cerrado" title="Proyecto cerrado"></fa-icon>
+                <button *ngIf="authService.hasRole('profesor')" (click)="asignarProyecto(proyecto)"
+                    aria-label="Asignar proyecto" title="Asignar proyecto" class="editarPerfil">
+                    <fa-icon style="float: right; color: #FF8B40;font-size: 200%;" [icon]="faPaperclip"></fa-icon>
+                </button>
+                <p><strong>Título del proyecto: </strong>{{proyecto.titulo}}</p>
+                <p><strong>Descripción: </strong>{{proyecto.descripcion}}</p>
+                <p *ngIf="proyecto.proyectoEtiqueta.length!=0">
+                    <span><strong>Tecnologías: </strong></span>
+                    <span *ngFor="let tag of proyecto.proyectoEtiqueta" class="label label-warning">{{tag.tag}}</span>
+                </p>
+                <p><strong>URL GitHub: </strong><a href="{{proyecto.urlGitHub}}"
+                        target="_blank">{{proyecto.urlGitHub}}</a>
+                </p>
+                <p><strong>Alumno: </strong><a
+                        [routerLink]="['/alumno/',proyecto.alumno.id]">{{proyecto.alumno.apellidos}},
+                        {{proyecto.alumno.nombre}}</a></p>
+                <p><strong>Convocatoria: </strong>{{proyecto.convocatoria}}, {{proyecto.anio}}</p>
+                <p><strong>Ciclo: </strong>{{proyecto.ciclo_siglas}}</p>
+                <p *ngIf="proyecto.horas"><strong>Horas: </strong>{{proyecto.horas}}</p>
+                <p *ngIf="proyecto.nota"><strong>Nota: </strong>{{proyecto.nota}}</p>
+            </div>
+        </div>
+    </div>
+</div>

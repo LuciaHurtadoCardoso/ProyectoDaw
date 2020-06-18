@@ -1,0 +1,32 @@
+<div *ngIf="proyectosReverse?.length==0" class="list-group-item">
+    <p>No hay ningún proyecto asignado</p>
+</div>
+<div *ngIf="proyectosReverse?.length>0">
+    <div *ngFor="let proyecto of proyectosReverse" class="list-group-item align-items-center">
+        <fa-icon *ngIf="proyecto.estado_proyecto" style="float: left; color: #FF8B40;font-size: 130%;"
+            [icon]="faUnlockAlt" alt="Proyecto en curso" aria-label="Proyecto en curso" title="Proyecto en curso">
+        </fa-icon>
+        <fa-icon *ngIf="!proyecto.estado_proyecto" style="float: left; color: #FF8B40;font-size: 130%;" [icon]="faLock"
+            aria-label="Proyecto cerrado" title="Proyecto cerrado"></fa-icon>
+        <button *ngIf="authService.hasRole('profesor') && proyecto.estado_proyecto" title="Calificar proyecto"
+            (click)="abrirModal(proyecto)" class="editarPerfil">
+            <fa-icon style="float: right; color: #FF8B40;font-size: 150%;" [icon]="faCheck"></fa-icon>
+        </button>
+        <p><strong>Título del proyecto: </strong>{{proyecto.titulo}}</p>
+        <p><strong>Descripción: </strong>{{proyecto.descripcion}}</p>
+        <p *ngIf="!proyecto.horas===null"><strong>Horas: </strong>{{proyecto.horas}}</p>
+        <p *ngIf="proyecto.proyectoEtiqueta.length!=0">
+            <span><strong>Tecnologías: </strong></span>
+            <span *ngFor="let tag of proyecto.proyectoEtiqueta" class="label label-warning">{{tag.tag}}</span>
+        </p>
+        <p><strong>URL GitHub: </strong><a href="{{proyecto.urlGitHub}}" target="_blank">{{proyecto.urlGitHub}}</a>
+        </p>
+        <p><strong>Alumno: </strong><a
+                [routerLink]="['../../alumno/',proyecto.alumno.id]">{{proyecto.alumno.apellidos}},
+                {{proyecto.alumno.nombre}}</a></p>
+        <p><strong>Convocatoria: </strong>{{proyecto.convocatoria}}, {{proyecto.anio}}</p>
+        <p><strong>Ciclo: </strong>{{proyecto.ciclo_siglas}}</p>
+        <button role="button" [routerLink]="['../../proyecto/ver', proyecto.id]"
+            class="btn btn-default text-white mas">Ir a la página del proyecto</button>
+    </div>
+</div>

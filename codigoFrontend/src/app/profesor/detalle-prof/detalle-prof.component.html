@@ -1,0 +1,74 @@
+<div *ngIf="modalService.modal" class="abrir-modal animacion fadeIn" id="myModal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 960px;">
+        <div class="modal-content" style="align-items: center !important;">
+            <div class="modal-header">
+                <button type="button" class="close editarPerfil" data-dismiss="modal" aria-hidden="true"
+                    (click)="modalService.cerrarModal()">
+                    <fa-icon style="float: left; color: #FF8B40;font-size: 130%;" [icon]="faTimes" alt="Cerrar"
+                        aria-label="Cerrar" title="Cerrar">
+                    </fa-icon>
+                </button>
+                <h4 class="modal-title text-center" id="myModalLabel">{{titulo}}</h4>
+            </div>
+            <div class="modal-body text-center">
+                <form #profesorEdit="ngForm">
+                    <div>
+                        <div class="custom-file subirFoto">
+                            <label for="inputGroupFile04" title="Subir foto">
+                                <img *ngIf="profesor?.foto"
+                                    src="http://localhost:8080/api/profesor/upload/img/{{profesor.foto}}" name="aboutme"
+                                    width="140" height="140" alt="Foto perfil" class="rounded-circle fotoPerfil">
+                                <img *ngIf="!profesor?.foto" src="http://localhost:8080/images/notUser.png"
+                                    name="aboutme" width="140" height="140" alt="Foto perfil"
+                                    class="rounded-circle fotoPerfil">
+                            </label>
+                            <input (change)="seleccionarFoto($event)" style="display: none !important;" type="file"
+                                class="custom-file-input" id="inputGroupFile04"
+                                aria-describedby="inputGroupFileAddon04">
+                        </div>
+
+                        <div class="my-3 input-group justify-content-center">
+                            <div class="info form-group">
+                                <input type="text" class="form-control" [(ngModel)]="profesor.nombre" name="nombre"
+                                    #nombre="ngModel" placeholder={{profesor.nombre}}>
+                                <div class="alert alert-danger"
+                                    *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                                    <div *ngIf="nombre.errors.required">
+                                        El nombre no puede estar vacío
+                                    </div>
+                                    <div *ngIf="nombre.errors.minlength">
+                                        El nombre debe tener al menos 4 caracteres
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info form-group">
+                                <input type="text" class="form-control" [(ngModel)]="profesor.apellidos" name="apellido"
+                                    #apellido="ngModel" placeholder={{profesor.apellidos}}>
+                                <div class="alert alert-danger"
+                                    *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+                                    <div *ngIf="apellido.errors.required">
+                                        El apellido no puede estar vacío
+                                    </div>
+                                </div>
+                            </div>
+                            <p>{{profesor.email}}</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <ul *ngIf="errores?.length>0" class="alert alert-danger">
+                <li *ngFor="let err of errores">
+                    {{err}}
+                </li>
+            </ul>
+            <div class="modal-footer">
+
+                <button role="button" (click)='update()' class="btn btn-default text-white" data-dismiss="modal"
+                    [disabled]="!profesorEdit.form.valid">Editar la información
+                    del perfil</button>
+
+            </div>
+        </div>
+    </div>
+</div>
