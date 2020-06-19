@@ -1,0 +1,16 @@
+https://github.com/LuciaHurtadoCardoso/ProyectoDaw
+
+USUARIOS Y CLAVES 
+
+- Administrador: admin@proyectoproyectos.com · soyElAdministrador1234
+- Alumnos:
+	luciahurtadocardoso1@gmail.com · password: hola
+	manuellp87@hotmail.com · password: hola
+	cocosierrasegura@gmail.com · password: hola
+	juanra.gc94@gmail.com · password: hola
+- Códigos de acceso:
+	profesor: soyElProfesor
+	alumno : soyAlumnoDelIESFcoRomeroVargas
+- Profesores:
+	juana@gmail.com · password: hola
+	paco@gmail.com · password: hola
